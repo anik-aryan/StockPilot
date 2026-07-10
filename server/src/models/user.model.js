@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcrypt");
 const ROLES = require("../constants/roles");
 
 const userSchema = new mongoose.Schema(
@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             minlength: 6,
+            select: false,
         },
 
         role: {
@@ -41,7 +42,7 @@ const userSchema = new mongoose.Schema(
             ref: "Warehouse",
             default: null,
         },
-        
+
         isActive: {
             type: Boolean,
             default: true,
@@ -49,11 +50,25 @@ const userSchema = new mongoose.Schema(
 
         lastLogin: {
             type: Date,
+            default: null,
         },
     },
     {
         timestamps: true,
     }
 );
+
+
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) {
+        return;
+    }
+
+    this.password = await bcrypt.hash(this.password, 10);
+});
+
+userSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
 module.exports = mongoose.model("User", userSchema);
