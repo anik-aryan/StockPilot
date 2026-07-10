@@ -20,27 +20,36 @@ MongoDB
 
 ## Application Flow
 
-Client Request
-↓
-
-Express App
+Incoming Request
 
 ↓
 
-Routes
+Express
 
 ↓
 
-Controllers
+Route
 
 ↓
 
-Services
+Controller
 
 ↓
 
-Models
+Service
+
+↓
+
+Model
 
 ↓
 
 MongoDB
+
+↓
+
+ApiResponse
+
+↓
+
+Client

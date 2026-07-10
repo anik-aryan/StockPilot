@@ -26,6 +26,7 @@ docs/
 - [x] Backend initialized
 - [x] Express Server Setup
 - [X] MongoDB Connected
+- [X] Global Error Handling
 - [ ] Authentication
 - [ ] Product Module
 - [ ] Inventory Module

@@ -1,0 +1,30 @@
+const { body } = require("express-validator");
+
+const signupValidator = [
+    body("firstName")
+        .trim()
+        .notEmpty()
+        .withMessage("First name is required"),
+
+    body("lastName")
+        .trim()
+        .notEmpty()
+        .withMessage("Last name is required"),
+
+    body("email")
+        .isEmail()
+        .withMessage("Please provide a valid email"),
+
+    body("password")
+        .isLength({ min: 6 })
+        .withMessage("Password must be at least 6 characters"),
+
+    body("role")
+        .optional()
+        .isIn(["admin", "manager", "staff"])
+        .withMessage("Invalid role"),
+];
+
+module.exports = {
+    signupValidator,
+};

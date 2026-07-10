@@ -11,3 +11,23 @@ stockpilot
 ODM:
 
 Mongoose
+
+# Users
+
+firstName
+
+lastName
+
+email
+
+password
+
+role
+
+warehouse
+
+avatar
+
+isActive
+
+lastLogin
