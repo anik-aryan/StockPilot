@@ -20,3 +20,11 @@ client/
 server/
 docs/
 ```
+
+## Backend Progress
+
+- [x] Backend initialized
+- [ ] MongoDB Connected
+- [ ] Authentication
+- [ ] Product Module
+- [ ] Inventory Module
