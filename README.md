@@ -27,6 +27,10 @@ docs/
 - [x] Express Server Setup
 - [X] MongoDB Connected
 - [X] Global Error Handling
+- [x] Warehouse Model
+- [x] Product Model
+- [x] Inventory Model
+- [x] StockMovement Model
 - [ ] Authentication
 - [ ] Product Module
 - [ ] Inventory Module

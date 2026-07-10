@@ -30,3 +30,11 @@
 -Added JWT Utility
 -Added signup validation
 -Added validation middleware
+
+## v0.0.7
+
+- Added Warehouse model
+- Added Product model
+- Added Inventory model
+- Added Stock Movement model
+- Added inventory audit history

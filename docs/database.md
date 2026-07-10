@@ -14,20 +14,49 @@ Mongoose
 
 # Users
 
-firstName
+- firstName
+- lastName
+- email
+- password
+- role
+- warehouse
+-isActive
+-lastLogin
 
-lastName
+## Warehouse
 
-email
+- name
+- code
+- address
+- city
+- state
+- isActive
 
-password
+## Product
 
-role
+- name
+- sku
+- description
+- unit
+- reorderLevel
+- costPrice
+- sellingPrice
+- image
+- isActive
 
-warehouse
+## Inventory
 
-avatar
+- product (Reference)
+- warehouse (Reference)
+- quantity
+- reservedQuantity
 
-isActive
+## StockMovement
 
-lastLogin
+- product (Reference)
+- warehouse (Reference)
+- movementType
+- quantity
+- reason
+- performedBy (Reference)
+- remarks
