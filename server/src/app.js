@@ -5,7 +5,11 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 
 const app = express();
+const notFound = require("./middlewares/notFound.middleware");
+const errorMiddleware = require("./middlewares/error.middleware");
 
+app.use(notFound);
+app.use(errorMiddleware);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
