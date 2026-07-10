@@ -35,6 +35,12 @@ const warehouseSchema = new mongoose.Schema(
       trim: true,
     },
 
+     manager: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+
     isActive: {
       type: Boolean,
       default: true,

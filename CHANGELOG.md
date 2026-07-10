@@ -59,3 +59,14 @@
 - HTTP Only Cookies
 - Authentication Middleware
 - Role Authorization Middleware
+
+## v0.0.10
+
+- Warehouse CRUD APIs
+- Warehouse Search
+- Pagination
+- Auto Warehouse Code Generation
+- Soft Delete Support
+- Role Based Authorization
+- Warehouse Validation
+- Manager Population
