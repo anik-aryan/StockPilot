@@ -854,4 +854,362 @@ This preserves inventory history and stock movement records.
 
 ---
 
+---
 
+# Stock Movement APIs
+
+Stock Movement APIs handle all inventory transactions in the system.
+
+Unlike traditional CRUD APIs, these endpoints execute business operations that automatically update inventory and maintain a complete audit trail.
+
+Authentication Required
+
+✅ Yes
+
+Roles
+
+| Role | Access |
+|------|--------|
+| Admin | Full Access |
+| Manager | Stock IN, Stock OUT, View History |
+| Staff | Stock IN, Stock OUT |
+| Guest | No Access |
+
+---
+
+# 1. Stock IN
+
+### Endpoint
+
+```http
+POST /stock/in
+```
+
+### Description
+
+Adds stock to a warehouse.
+
+If the inventory record does not exist, it is automatically created.
+
+If the inventory already exists, its quantity is increased.
+
+---
+
+### Request Body
+
+```json
+{
+    "warehouse":"6870abc123456789",
+    "product":"6870xyz987654321",
+    "quantity":500,
+    "reason":"Purchase",
+    "remarks":"Purchased from Tata Steel"
+}
+```
+
+---
+
+
+### Success Response
+
+Status Code
+
+```
+201 Created
+```
+
+```json
+{
+    "success": true,
+    "statusCode": 201,
+    "message": "Stock added successfully",
+    "data": {
+        "warehouse":"Delhi Warehouse",
+        "product":"Steel Rod",
+        "quantity":500
+    }
+}
+```
+
+---
+
+
+# 2. Stock OUT
+
+### Endpoint
+
+```http
+POST /stock/out
+```
+
+### Description
+
+Removes stock from a warehouse.
+
+Stock can only be removed if sufficient quantity is available.
+
+Every stock removal automatically creates a movement history record.
+
+---
+
+### Request Body
+
+```json
+{
+    "warehouse":"6870abc123456789",
+    "product":"6870xyz987654321",
+    "quantity":200,
+    "reason":"Production",
+    "remarks":"Issued to Production Unit"
+}
+```
+
+---
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Stock removed successfully",
+    "data": {
+        "warehouse":"Delhi Warehouse",
+        "product":"Steel Rod",
+        "quantity":300
+    }
+}
+```
+
+---
+
+### Insufficient Stock Example
+
+Current Quantity
+
+```
+100
+```
+
+Request
+
+```json
+{
+    "quantity":150
+}
+```
+
+Response
+
+```json
+{
+    "success": false,
+    "statusCode": 400,
+    "message": "Insufficient stock available"
+}
+```
+
+---
+
+
+# 3. Movement History
+
+### Endpoint
+
+```http
+GET /stock/history
+```
+
+### Description
+
+Returns complete inventory transaction history.
+
+Supports filtering and pagination.
+
+Only Admin and Manager can access movement history.
+
+---
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Movement history fetched successfully",
+    "data": {
+        "history":[
+            {
+                "referenceNo":"MOV-000001",
+                "warehouse":"Delhi Warehouse",
+                "product":"Steel Rod",
+                "type":"IN",
+                "quantity":500,
+                "reason":"Purchase",
+                "performedBy":"Anik Aryan",
+                "createdAt":"2026-07-11T11:45:00Z"
+            }
+        ],
+        "page":1,
+        "total":50,
+        "totalPages":5
+    }
+}
+```
+
+---
+
+---
+
+# Inventory APIs
+
+Inventory APIs provide a real-time view of stock available across all warehouses.
+
+Unlike other modules, Inventory is a **read-only module**.
+
+Inventory records are automatically managed by the Stock Movement module.
+
+Authentication Required
+
+✅ Yes
+
+Roles
+
+| Role | Access |
+|------|--------|
+| Admin | View Inventory |
+| Manager | View Inventory |
+| Staff | No Access |
+
+---
+
+## 1. Get All Inventory
+
+### Endpoint
+
+```http
+GET /inventory
+```
+
+### Description
+
+Returns all inventory records.
+
+Supports:
+
+- Pagination
+- Warehouse Filter
+- Product Filter
+- Low Stock Filter
+
+---
+
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Inventory fetched successfully",
+    "data": {
+        "inventory": [
+            {
+                "_id": "6871abc123",
+
+                "warehouse": {
+                    "name": "Delhi Warehouse",
+                    "code": "DEL001",
+                    "city": "Delhi",
+                    "state": "Delhi"
+                },
+
+                "product": {
+                    "name": "Steel Rod",
+                    "sku": "STE001",
+                    "price": 120,
+                    "reorderLevel": 50
+                },
+
+                "quantity": 500,
+
+                "reservedQuantity": 20,
+
+                "availableQuantity": 480,
+
+                "inventoryValue": 60000,
+
+                "status": "IN STOCK"
+            }
+        ],
+
+        "total": 20,
+
+        "page": 1,
+
+        "totalPages": 2
+    }
+}
+```
+
+---
+
+
+## 2. Get Inventory By ID
+
+### Endpoint
+
+```http
+GET /inventory/:id
+```
+
+Example
+
+```http
+GET /inventory/6871abc123456789
+```
+
+---
+
+### Description
+
+Returns detailed information about a single inventory record.
+
+---
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Inventory fetched successfully",
+    "data": {
+        "_id": "6871abc123",
+
+        "warehouse": {
+            "name": "Delhi Warehouse",
+            "code": "DEL001"
+        },
+
+        "product": {
+            "name": "Steel Rod",
+            "sku": "STE001",
+            "price": 120,
+            "reorderLevel": 50
+        },
+
+        "quantity": 500,
+
+        "reservedQuantity": 20,
+
+        "availableQuantity": 480,
+
+        "inventoryValue": 60000,
+
+        "status": "IN STOCK"
+    }
+}
+```
+
+---

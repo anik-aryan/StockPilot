@@ -25,8 +25,8 @@ docs/
 
 - [x] Backend initialized
 - [x] Express Server Setup
-- [X] MongoDB Connected
-- [X] Global Error Handling
+- [x] MongoDB Connected
+- [x] Global Error Handling
 - [x] Warehouse Model
 - [x] Product Model
 - [x] Inventory Model
@@ -34,4 +34,10 @@ docs/
 - [x] Authentication
 - [x] Warehouse Module
 - [x] Product Module
-- [ ] Inventory Module
+- [x] Inventory Module
+- [x] StockMovement Module
+- [ ] Search , filter , pagination
+- [ ] Supplier name
+- [ ] Stock Request
+- [ ] To make stock in/out atomic
+- [ ] Stock Analytics

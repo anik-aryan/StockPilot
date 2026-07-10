@@ -81,3 +81,21 @@
 - Request Validation
 - Role-Based Authorization
 - Standard API Response Structure
+
+## v0.0.12
+
+- Stock IN API
+- Stock OUT API
+- Movement History API
+- Automatic Inventory Creation
+- Automatic Inventory Updates
+- Inventory Validation
+- Quantity Validation
+- Movement Reference Number
+- Audit Trail
+- Inventory Listing API
+- Inventory Details API
+- Warehouse Filter
+- Product Filter
+- Pagination Support
+- Low Stock Filter
