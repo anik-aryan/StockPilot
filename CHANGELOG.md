@@ -49,3 +49,13 @@
 - Password hashing using bcrypt
 - Password removed from API response
 - Standardized API response format
+
+## v0.0.9
+
+- Login API
+- Logout API
+- Get Current User API
+- JWT Authentication
+- HTTP Only Cookies
+- Authentication Middleware
+- Role Authorization Middleware

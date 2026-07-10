@@ -31,6 +31,6 @@ docs/
 - [x] Product Model
 - [x] Inventory Model
 - [x] StockMovement Model
-- [ ] Authentication
+- [x] Authentication
 - [ ] Product Module
 - [ ] Inventory Module

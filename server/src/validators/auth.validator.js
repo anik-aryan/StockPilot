@@ -25,6 +25,18 @@ const signupValidator = [
         .withMessage("Invalid role"),
 ];
 
+const loginValidator = [
+    body("email")
+        .isEmail()
+        .withMessage("Valid email is required")
+        .normalizeEmail(),
+
+    body("password")
+        .notEmpty()
+        .withMessage("Password is required"),
+];
+
 module.exports = {
     signupValidator,
+    loginValidator,
 };
