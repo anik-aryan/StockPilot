@@ -24,7 +24,8 @@ docs/
 ## Backend Progress
 
 - [x] Backend initialized
-- [ ] MongoDB Connected
+- [x] Express Server Setup
+- [X] MongoDB Connected
 - [ ] Authentication
 - [ ] Product Module
 - [ ] Inventory Module

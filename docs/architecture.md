@@ -17,3 +17,30 @@ Models
 ↓
 
 MongoDB
+
+## Application Flow
+
+Client Request
+↓
+
+Express App
+
+↓
+
+Routes
+
+↓
+
+Controllers
+
+↓
+
+Services
+
+↓
+
+Models
+
+↓
+
+MongoDB
