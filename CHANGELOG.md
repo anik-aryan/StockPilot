@@ -38,3 +38,14 @@
 - Added Inventory model
 - Added Stock Movement model
 - Added inventory audit history
+
+## v0.0.8
+
+- User Registration API
+- Request Validation using express-validator
+- Service Layer Architecture
+- Authentication Controller
+- Authentication Routes
+- Password hashing using bcrypt
+- Password removed from API response
+- Standardized API response format
