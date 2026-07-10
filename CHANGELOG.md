@@ -70,3 +70,14 @@
 - Role Based Authorization
 - Warehouse Validation
 - Manager Population
+
+## v0.0.11
+
+- Product CRUD APIs
+- Automatic SKU Generation
+- Product Search
+- Pagination Support
+- Soft Delete Functionality
+- Request Validation
+- Role-Based Authorization
+- Standard API Response Structure

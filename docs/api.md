@@ -541,4 +541,317 @@ This preserves inventory history and stock movement records.
 
 ---
 
+---
+
+# Product APIs
+
+Product APIs allow administrators to create and manage products. Managers can view products but cannot create, update or delete them.
+
+Authentication Required
+
+✅ Yes
+
+Roles
+
+| Role | Access |
+|------|--------|
+| Admin | Full CRUD Access |
+| Manager | Read Only |
+| Staff | No Access |
+
+---
+
+## 1. Create Product
+
+### Endpoint
+
+```http
+POST /products
+```
+
+### Description
+
+Creates a new product in the system. The SKU is automatically generated based on the product name.
+
+Example
+
+```
+Steel Rod
+↓
+
+STE001
+```
+
+---
+
+### Request Body
+
+```json
+{
+    "name": "Steel Rod",
+    "description": "Construction Grade Steel Rod",
+    "unit": "pcs",
+    "price": 120,
+    "reorderLevel": 50
+}
+```
+
+---
+
+### Success Response
+
+Status Code
+
+```
+201 Created
+```
+
+```json
+{
+    "success": true,
+    "statusCode": 201,
+    "message": "Product created successfully",
+    "data": {
+        "_id": "6870c21d18b7d38d4bfa9d12",
+        "name": "Steel Rod",
+        "sku": "STE001",
+        "description": "Construction Grade Steel Rod",
+        "unit": "pcs",
+        "price": 120,
+        "reorderLevel": 50,
+        "isActive": true,
+        "createdAt": "...",
+        "updatedAt": "..."
+    }
+}
+```
+
+---
+
+### Possible Errors
+
+| Status | Description |
+|---------|-------------|
+|400|Validation Failed|
+|401|Unauthorized|
+|403|Only Admin can create products|
+|409|Product already exists|
+|500|Internal Server Error|
+
+---
+
+## 2. Get All Products
+
+### Endpoint
+
+```http
+GET /products
+```
+
+### Description
+
+Returns all active products.
+
+Supports:
+
+- Search
+- Pagination
+
+---
+
+### Query Parameters
+
+| Parameter | Description |
+|------------|-------------|
+|page|Current Page|
+|limit|Items Per Page|
+|search|Search by Product Name or SKU|
+
+Example
+
+```http
+GET /products?page=1&limit=10
+```
+
+```http
+GET /products?search=steel
+```
+
+---
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Products fetched successfully",
+    "data": {
+        "products": [
+            {
+                "_id": "...",
+                "name": "Steel Rod",
+                "sku": "STE001",
+                "price": 120,
+                "unit": "pcs"
+            }
+        ],
+        "total": 15,
+        "page": 1,
+        "totalPages": 2
+    }
+}
+```
+
+---
+
+### Possible Errors
+
+| Status | Description |
+|---------|-------------|
+|401|Unauthorized|
+|403|Access Denied|
+
+---
+
+## 3. Get Product By ID
+
+### Endpoint
+
+```http
+GET /products/:id
+```
+
+Example
+
+```http
+GET /products/6870c21d18b7d38d4bfa9d12
+```
+
+---
+
+### Description
+
+Returns complete information about a specific product.
+
+---
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Product fetched successfully",
+    "data": {
+        "_id": "...",
+        "name": "Steel Rod",
+        "sku": "STE001",
+        "description": "Construction Grade Steel Rod",
+        "price": 120,
+        "unit": "pcs",
+        "reorderLevel": 50,
+        "isActive": true
+    }
+}
+```
+
+---
+
+### Possible Errors
+
+| Status | Description |
+|---------|-------------|
+|400|Invalid Product ID|
+|404|Product Not Found|
+
+---
+
+## 4. Update Product
+
+### Endpoint
+
+```http
+PATCH /products/:id
+```
+
+### Description
+
+Updates product information.
+
+SKU cannot be modified.
+
+---
+
+### Request Body
+
+```json
+{
+    "price": 150,
+    "reorderLevel": 80
+}
+```
+
+---
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Product updated successfully",
+    "data": {}
+}
+```
+
+---
+
+### Possible Errors
+
+| Status | Description |
+|---------|-------------|
+|400|Validation Failed|
+|401|Unauthorized|
+|403|Only Admin can update products|
+|404|Product Not Found|
+
+---
+
+## 5. Delete Product
+
+### Endpoint
+
+```http
+DELETE /products/:id
+```
+
+### Description
+
+Soft deletes a product.
+
+The product is **not permanently removed** from the database.
+
+Instead,
+
+```
+isActive = false
+```
+
+This preserves inventory history and stock movement records.
+
+---
+
+### Success Response
+
+```json
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Product deleted successfully"
+}
+```
+
+---
+
 
