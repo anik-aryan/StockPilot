@@ -1,11 +1,7 @@
+import Dashboard from "./features/dashboard/pages/Dashboard";
+
 function App() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-5xl font-bold text-emerald-600">
-        StockPilot
-      </h1>
-    </div>
-  );
+  return <Dashboard />;
 }
 
 export default App;
