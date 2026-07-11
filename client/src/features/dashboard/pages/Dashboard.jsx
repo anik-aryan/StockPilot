@@ -1,9 +1,19 @@
-import DashboardLayout from "../../../layouts/DashboardLayout";
+import Button from "../../../components/ui/Button";
+import Card from "../../../components/ui/Card";
+import PageHeader from "../../../components/ui/PageHeader";
 
 export default function Dashboard() {
   return (
-    <div className="rounded-2xl border bg-white p-8">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
-    </div>
+    <>
+      <PageHeader
+        title="Dashboard"
+        subtitle="Welcome back to StockPilot"
+        action={<Button>Add Product</Button>}
+      />
+
+      <Card>
+        Dashboard is working 🚀
+      </Card>
+    </>
   );
 }

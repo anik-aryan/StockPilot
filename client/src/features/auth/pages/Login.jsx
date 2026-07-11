@@ -1,3 +1,7 @@
-export default function Products() {
-  return <h1 className="text-3xl font-bold">Login</h1>;
+export default function Login() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      Login Page
+    </div>
+  );
 }
