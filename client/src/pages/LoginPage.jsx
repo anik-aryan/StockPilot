@@ -1,7 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -30,9 +33,24 @@ export default function LoginPage() {
         }
       );
 
-      console.log(res.data);
+      const user = res.data.data;
 
-      alert("Login Successful");
+        localStorage.setItem(
+        "user",
+        JSON.stringify(user)
+        );
+
+        if (user.role === "admin") {
+        navigate("/dashboard");
+        }
+
+        if (user.role === "manager") {
+        navigate("/dashboard");
+        }
+
+        if (user.role === "staff") {
+        navigate("/dashboard");
+        }
     } catch (err) {
       alert(
         err?.response?.data?.message ||
@@ -45,7 +63,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left Side */}
+      
       <div className="hidden lg:flex w-1/2 bg-emerald-700 text-white p-16 flex-col justify-center">
         <h1 className="text-5xl font-bold mb-6">
           StockPilot
