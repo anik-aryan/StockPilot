@@ -21,17 +21,22 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(morgan("dev"));
 
 
-app.get("/api/v1/health", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "StockPilot API is running successfully",
-    });
-});
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
 
 
 app.use("/api/v1/auth", authRoutes);
