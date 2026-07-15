@@ -23,6 +23,10 @@ const signupValidator = [
         .optional()
         .isIn(["admin", "manager", "staff"])
         .withMessage("Invalid role"),
+    body("warehouse")
+    .optional()
+    .isMongoId()
+    .withMessage("Invalid warehouse id"),
 ];
 
 const loginValidator = [

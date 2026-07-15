@@ -99,3 +99,10 @@
 - Product Filter
 - Pagination Support
 - Low Stock Filter
+
+## v0.0.13
+
+- Warehouse assignment support for users
+- Warehouse validation during user registration
+- Warehouse population in login response
+- Warehouse population in current user endpoint

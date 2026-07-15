@@ -1,22 +1,55 @@
 const User = require("../models/user.model");
 const ApiError = require("../utils/ApiError");
 const { generateAccessToken } = require("../utils/jwt");
-
+const Warehouse = require("../models/warehouse.model");
 const signup = async (userData) => {
-  const existingUser = await User.findOne({
-    email: userData.email,
-  });
 
-  if (existingUser) {
-    throw new ApiError(409, "Email already exists");
-  }
+    const existingUser = await User.findOne({
+        email: userData.email,
+    });
 
-const createdUser = await User.create(userData);
+    if (existingUser) {
+        throw new ApiError(409, "Email already exists");
+    }
 
-const user = await User.findById(createdUser._id)
-    .select("-password");
+   
+    if (
+        ["manager", "staff"].includes(userData.role) &&
+        !userData.warehouse
+    ) {
+        throw new ApiError(
+            400,
+            "Warehouse is required for manager and staff"
+        );
+    }
 
-return user;
+    
+    if (userData.warehouse) {
+
+        const warehouseExists =
+            await Warehouse.findById(userData.warehouse);
+
+        if (!warehouseExists) {
+            throw new ApiError(
+                404,
+                "Warehouse not found"
+            );
+        }
+    }
+
+    const createdUser =
+        await User.create(userData);
+
+    const user = await User.findById(
+        createdUser._id
+    )
+        .populate(
+            "warehouse",
+            "name code city"
+        )
+        .select("-password");
+
+    return user;
 };
 
 const login = async ({ email, password }) => {
@@ -38,7 +71,9 @@ const login = async ({ email, password }) => {
 
     const token = generateAccessToken(user._id);
 
-    const userData = await User.findById(user._id).select("-password");
+    const userData = await User.findById(user._id)
+    .populate("warehouse", "name code city")
+    .select("-password");
 
     return {
         token,
@@ -52,7 +87,8 @@ const logout = async () => {
 
 const getCurrentUser = async (userId) => {
 
-    return await User.findById(userId);
+    return await User.findById(userId)
+        .populate("warehouse", "name code city");
 
 };
 

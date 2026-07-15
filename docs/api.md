@@ -18,29 +18,63 @@ Authentication is handled using JWT (JSON Web Token) stored in HTTP-only cookies
 
 ---
 
-## 1. Register User
+## Register User
 
 ### Endpoint
 
-```
+```http
 POST /auth/signup
 ```
 
 ### Description
 
-Creates a new user account.
+Registers a new user in the system.
+
+Warehouse assignment is mandatory for Manager and Staff roles.
+
+Warehouse assignment is optional for Admin users.
 
 ---
 
-### Request Body
+### Request Body (Admin)
 
 ```json
 {
-  "firstName": "Anik",
-  "lastName": "Aryan",
-  "email": "anik@test.com",
-  "password": "123456",
-  "role": "admin"
+    "firstName": "Anik",
+    "lastName": "Aryan",
+    "email": "admin@test.com",
+    "password": "123456",
+    "role": "admin"
+}
+```
+
+---
+
+### Request Body (Manager)
+
+```json
+{
+    "firstName": "Ramesh",
+    "lastName": "Kumar",
+    "email": "ramesh@test.com",
+    "password": "123456",
+    "role": "manager",
+    "warehouse": "6870abc123456789"
+}
+```
+
+---
+
+### Request Body (Staff)
+
+```json
+{
+    "firstName": "Amit",
+    "lastName": "Sharma",
+    "email": "amit@test.com",
+    "password": "123456",
+    "role": "staff",
+    "warehouse": "6870abc123456789"
 }
 ```
 
@@ -48,43 +82,46 @@ Creates a new user account.
 
 ### Success Response
 
-**Status Code**
-
-```
-201 Created
-```
-
 ```json
 {
-  "success": true,
-  "statusCode": 201,
-  "message": "User registered successfully",
-  "data": {
-    "_id": "665d7fa8c0b9d7b76e1c2d34",
-    "firstName": "Anik",
-    "lastName": "Aryan",
-    "email": "anik@test.com",
-    "role": "admin",
-    "warehouse": null,
-    "isActive": true,
-    "lastLogin": null,
-    "createdAt": "2026-07-10T12:30:00.000Z",
-    "updatedAt": "2026-07-10T12:30:00.000Z"
-  }
+    "success": true,
+    "statusCode": 201,
+    "message": "User registered successfully",
+    "data": {
+        "_id": "...",
+        "firstName": "Ramesh",
+        "lastName": "Kumar",
+        "email": "ramesh@test.com",
+        "role": "manager",
+        "warehouse": {
+            "_id": "6870abc123456789",
+            "name": "Delhi Warehouse",
+            "code": "DEL001",
+            "city": "Delhi"
+        }
+    }
 }
 ```
 
 ---
 
-### Validation Errors
+### Validation Rules
 
-| Status Code | Reason |
-|-------------|--------|
-|400|Invalid Request Body|
-|409|Email Already Exists|
-|500|Internal Server Error|
+| Role | Warehouse Required |
+|--------|--------|
+| Admin | No |
+| Manager | Yes |
+| Staff | Yes |
 
 ---
+
+### Possible Errors
+
+| Status | Description |
+|---------|-------------|
+|400|Warehouse is required for manager and staff|
+|404|Warehouse not found|
+|409|Email already exists|
 
 ## 2. Login User
 
@@ -121,17 +158,28 @@ Authenticates a registered user and returns user information. A JWT access token
 
 ```json
 {
-  "success": true,
-  "statusCode": 200,
-  "message": "Login successful",
-  "data": {
-    "_id": "665d7fa8c0b9d7b76e1c2d34",
-    "firstName": "Anik",
-    "lastName": "Aryan",
-    "email": "anik@test.com",
-    "role": "admin",
-    "warehouse": null
-  }
+    "success": true,
+    "statusCode": 200,
+    "message": "Login successful",
+    "data": {
+        "token": "jwt_token",
+
+        "user": {
+            "_id": "...",
+            "firstName": "Ramesh",
+            "lastName": "Kumar",
+            "email": "ramesh@test.com",
+
+            "role": "manager",
+
+            "warehouse": {
+                "_id": "6870abc123456789",
+                "name": "Delhi Warehouse",
+                "code": "DEL001",
+                "city": "Delhi"
+            }
+        }
+    }
 }
 ```
 
