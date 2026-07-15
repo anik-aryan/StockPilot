@@ -1,11 +1,11 @@
+import { useAuth } from "../../app/AuthContext";
+
 import AdminDashboard from "./AdminDashboard";
 import ManagerDashboard from "./ManagerDashboard";
 import StaffDashboard from "./StaffDashboard";
 
 export default function DashboardRouter() {
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
+  const { user } = useAuth();
 
   switch (user?.role) {
     case "admin":
@@ -18,6 +18,6 @@ export default function DashboardRouter() {
       return <StaffDashboard />;
 
     default:
-      return <StaffDashboard />;
+      return null;
   }
 }
