@@ -1,8 +1,11 @@
+import { useAuth } from "../app/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 
 export default function LoginPage() {
+  const { fetchUser } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -33,24 +36,21 @@ export default function LoginPage() {
         }
       );
 
-      const user = res.data.data;
+      await fetchUser();
 
-        localStorage.setItem(
-        "user",
-        JSON.stringify(user)
-        );
+      const role = res.data.data.role;
 
-        if (user.role === "admin") {
+      if (role === "admin") {
         navigate("/dashboard");
-        }
+      }
 
-        if (user.role === "manager") {
+      if (role === "manager") {
         navigate("/dashboard");
-        }
+      }
 
-        if (user.role === "staff") {
+      if (role === "staff") {
         navigate("/dashboard");
-        }
+      }
     } catch (err) {
       alert(
         err?.response?.data?.message ||
